@@ -14,10 +14,7 @@ Rule<char> BracketMatch::expr = term + lazyExpr | empty;
 
 bool byx::BracketMatch::Match(const std::string& s)
 {
-    vector<char> v(s.begin(), s.end());
-    Scanner<char> input(vector<char>(s.begin(), s.end()));
-    return expr.parse(input) && input.end();
-    
+    return expr.parse(vector<char>(s.begin(), s.end())) == s.size();
 }
 
 Rule<char> byx::BracketMatch::GetExpr()

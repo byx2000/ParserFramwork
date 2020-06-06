@@ -19,22 +19,26 @@ namespace byx
 	class Parser
 	{
 	public:
-		bool parse(Scanner<T>& input)
+		// 解析成功，返回解析后输入流的索引
+		// 解析失败，返回一个小于0的值
+		int parse(Scanner<T>& input)
 		{
 			size_t backup = input.getIndex();
 			if (!consume(input))
 			{
 				input.setIndex(backup);
-				return false;
+				return -1;
 			}
-			return true;
+			return input.getIndex();
 		}
 		virtual ~Parser() { }
 	protected:
+		// 消耗输入流，消耗成功返回true，否则返回false
 		virtual bool consume(Scanner<T>& input) = 0;
 	};
 
 	// Empty<T>
+	// 不消耗输入，永远返回成功
 
 	template<typename T>
 	class Empty : public Parser<T>
@@ -47,6 +51,8 @@ namespace byx
 	};
 
 	// Any<T>
+	// 输入流前移一位，返回成功
+	// 若无法前移（输入流已到末尾），返回失败
 
 	template<typename T>
 	class Any : public Parser<T>
@@ -64,6 +70,7 @@ namespace byx
 	};
 
 	// Expect<T>
+	// 检查输入流下一个元素是否满足指定条件
 
 	template<typename T>
 	class Expect : public Parser<T>
@@ -84,6 +91,7 @@ namespace byx
 	};
 
 	// Satisfy<T>
+	// 检查指定解析器的解析结果是否符合指定条件
 
 	template<typename T>
 	class Satisfy : public Parser<T>
@@ -113,6 +121,7 @@ namespace byx
 	};
 
 	// Symbol<T>
+	// 检查输入流下一个元素是否为期望元素
 
 	template<typename T>
 	class Symbol : public Parser<T>
@@ -134,6 +143,7 @@ namespace byx
 	};
 
 	// Exclude<T>
+	// 检查输入流下一个元素是否不等于指定元素
 
 	template<typename T>
 	class Exclude : public Parser<T>
@@ -155,6 +165,7 @@ namespace byx
 	};
 
 	// SymbolSet<T>
+	// 检查输入流下一个元素是否在可接受集合之中
 
 	template<typename T>
 	class SymbolSet : public Parser<T>
@@ -191,6 +202,7 @@ namespace byx
 	};
 
 	// ExcludeSet<T>
+	// 检查输入流下一个元素是否在不可接受集合之中
 
 	template<typename T>
 	class ExcludeSet : public Parser<T>
@@ -227,6 +239,7 @@ namespace byx
 	};
 
 	// ZeroOrMore<T>
+	// 对指定解析器应用零次或多次
 
 	template<typename T>
 	class ZeroOrMore : public Parser<T>
@@ -236,7 +249,7 @@ namespace byx
 	protected:
 		virtual bool consume(Scanner<T>& input) override
 		{
-			while (parser->parse(input));
+			while (parser->parse(input) > 0);
 			return true;
 		}
 	private:
@@ -244,6 +257,7 @@ namespace byx
 	};
 
 	// OneOrMore<T>
+	// 对指定解析器应用至少一次
 
 	template<typename T>
 	class OneOrMore : public Parser<T>
@@ -253,11 +267,11 @@ namespace byx
 	protected:
 		virtual bool consume(Scanner<T>& input) override
 		{
-			if (!parser->parse(input))
+			if (parser->parse(input) <= 0)
 			{
 				return false;
 			}
-			while (parser->parse(input));
+			while (parser->parse(input) > 0);
 			return true;
 		}
 	private:
@@ -265,6 +279,7 @@ namespace byx
 	};
 
 	// Concat<T>
+	// 依次应用两个解析器
 
 	template<typename T>
 	class Concat : public Parser<T>
@@ -275,17 +290,18 @@ namespace byx
 	protected:
 		virtual bool consume(Scanner<T>& input) override
 		{
-			if (!lhs->parse(input))
+			if (lhs->parse(input) < 0)
 			{
 				return false;
 			}
-			return rhs->parse(input);
+			return rhs->parse(input) >= 0;
 		}
 	private:
 		std::shared_ptr<Parser<T>> lhs, rhs;
 	};
 
 	// Choose<T>
+	// 应用两个解析器中的一个
 
 	template<typename T>
 	class Choose : public Parser<T>
@@ -296,17 +312,18 @@ namespace byx
 	protected:
 		virtual bool consume(Scanner<T>& input) override
 		{
-			if (lhs->parse(input))
+			if (lhs->parse(input) >= 0)
 			{
 				return true;
 			}
-			return rhs->parse(input);
+			return rhs->parse(input) >= 0;
 		}
 	private:
 		std::shared_ptr<Parser<T>> lhs, rhs;
 	};
 
 	// CallbackAfterSucceeded<T>
+	// 解析成功后调用回调函数
 
 	template<typename T>
 	class CallbackAfterSucceeded : public Parser<T>
@@ -318,7 +335,7 @@ namespace byx
 		virtual bool consume(Scanner<T>& input) override
 		{
 			size_t begin = input.getIndex();
-			if (parser->parse(input))
+			if (parser->parse(input) >= 0)
 			{
 				callback(input.getElements(), begin, input.getIndex());
 				return true;
@@ -331,6 +348,7 @@ namespace byx
 	};
 
 	// Lazy<T>
+	// 惰性获取解析器
 
 	template<typename T>
 	class Lazy : public Parser<T>
@@ -347,6 +365,7 @@ namespace byx
 	};
 
 	// Range<char>
+	// 指定字符范围
 
 	class Range : public Parser<char>
 	{
@@ -367,6 +386,7 @@ namespace byx
 	};
 
 	// Prefix<char>
+	// 指定字符串前缀
 
 	class Prefix : public Parser<char>
 	{

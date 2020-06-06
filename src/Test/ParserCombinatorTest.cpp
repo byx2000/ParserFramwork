@@ -65,31 +65,31 @@ void byx::ParserCombinatorTest::Run()
 void byx::ParserCombinatorTest::EmptyTest()
 {
 	Scanner<char> input = StringToScanner("abc");
-	bool res = Empty<char>().parse(input);
-	assert(res);
+	int res = Empty<char>().parse(input);
+	assert(res == 0);
 	assert(input.getIndex() == 0);
 
 	input = StringToScanner("");
 	res = Empty<char>().parse(input);
-	assert(res);
+	assert(res == 0);
 	assert(input.getIndex() == 0);
 }
 
 void byx::ParserCombinatorTest::AnyTest()
 {
 	Scanner<char> input = StringToScanner("abc");
-	bool res = Any<char>().parse(input);
-	assert(res);
+	int res = Any<char>().parse(input);
+	assert(res == 1);
 	assert(input.getIndex() == 1);
 
 	input = StringToScanner("a");
 	res = Any<char>().parse(input);
-	assert(res);
+	assert(res == 1);
 	assert(input.getIndex() == 1);
 
 	input = StringToScanner("");
 	res = Any<char>().parse(input);
-	assert(!res);
+	assert(res < 0);
 	assert(input.getIndex() == 0);
 }
 
@@ -101,29 +101,28 @@ void byx::ParserCombinatorTest::ExpectTest()
 	};
 
 	Scanner<char> input = StringToScanner("abc");
-	bool res = Expect<char>(predicate).parse(input);
-	assert(res);
+	int res = Expect<char>(predicate).parse(input);
+	assert(res == 1);
 	assert(input.getIndex() == 1);
 
 	input = StringToScanner("a");
 	res = Expect<char>(predicate).parse(input);
-	assert(res);
+	assert(res == 1);
 	assert(input.getIndex() == 1);
 
 	input = StringToScanner("bcd");
 	res = Expect<char>(predicate).parse(input);
-	assert(!res);
+	assert(res < 0);
 	assert(input.getIndex() == 0);
-
 
 	input = StringToScanner("b");
 	res = Expect<char>(predicate).parse(input);
-	assert(!res);
+	assert(res < 0);
 	assert(input.getIndex() == 0);
 
 	input = StringToScanner("");
 	res = Expect<char>(predicate).parse(input);
-	assert(!res);
+	assert(res < 0);
 	assert(input.getIndex() == 0);
 }
 
@@ -136,315 +135,315 @@ void byx::ParserCombinatorTest::SatisfyTest()
 	};
 
 	Scanner<char> input = StringToScanner("123");
-	bool res =  Satisfy<char>(make_shared<Any<char>>(), isDigit).parse(input);
-	assert(res);
+	int res =  Satisfy<char>(make_shared<Any<char>>(), isDigit).parse(input);
+	assert(res == 1);
 	assert(input.getIndex() == 1);
 
 	input = StringToScanner("abc");
 	res = Satisfy<char>(make_shared<Any<char>>(), isDigit).parse(input);
-	assert(!res);
+	assert(res < 0);
 	assert(input.getIndex() == 0);
 
 	input = StringToScanner("0");
 	res = Satisfy<char>(make_shared<Any<char>>(), isDigit).parse(input);
-	assert(res);
+	assert(res == 1);
 	assert(input.getIndex() == 1);
 
 	input = StringToScanner("a");
 	res = Satisfy<char>(make_shared<Any<char>>(), isDigit).parse(input);
-	assert(!res);
+	assert(res < 0);
 	assert(input.getIndex() == 0);
 
 	input = StringToScanner("");
 	res = Satisfy<char>(make_shared<Any<char>>(), isDigit).parse(input);
-	assert(!res);
+	assert(res < 0);
 	assert(input.getIndex() == 0);
 }
 
 void byx::ParserCombinatorTest::SymbolTest()
 {
 	Scanner<char> input = StringToScanner("abc");
-	bool res = Symbol<char>('a').parse(input);
-	assert(res);
+	int res = Symbol<char>('a').parse(input);
+	assert(res == 1);
 	assert(input.getIndex() == 1);
 
 	input = StringToScanner("123");
 	res = Symbol<char>('a').parse(input);
-	assert(!res);
+	assert(res < 0);
 	assert(input.getIndex() == 0);
 
 	input = StringToScanner("a");
 	res = Symbol<char>('a').parse(input);
-	assert(res);
+	assert(res == 1);
 	assert(input.getIndex() == 1);
 
 	input = StringToScanner("1");
 	res = Symbol<char>('a').parse(input);
-	assert(!res);
+	assert(res < 0);
 	assert(input.getIndex() == 0);
 
 	input = StringToScanner("");
 	res = Symbol<char>('a').parse(input);
-	assert(!res);
+	assert(res < 0);
 	assert(input.getIndex() == 0);
 }
 
 void byx::ParserCombinatorTest::ExcludeTest()
 {
 	Scanner<char> input = StringToScanner("abc");
-	bool res = Exclude<char>('a').parse(input);
-	assert(!res);
+	int res = Exclude<char>('a').parse(input);
+	assert(res < 0);
 	assert(input.getIndex() == 0);
 
 	input = StringToScanner("xyz");
 	res = Exclude<char>('a').parse(input);
-	assert(res);
+	assert(res == 1);
 	assert(input.getIndex() == 1);
 
 	input = StringToScanner("");
 	res = Exclude<char>('a').parse(input);
-	assert(!res);
+	assert(res < 0);
 	assert(input.getIndex() == 0);
 }
 
 void byx::ParserCombinatorTest::SymbolSetTest()
 {
 	Scanner<char> input = StringToScanner("apple");
-	bool res = SymbolSet<char>{ 'a', 'b', 'c' }.parse(input);
-	assert(res);
+	int res = SymbolSet<char>{ 'a', 'b', 'c' }.parse(input);
+	assert(res == 1);
 	assert(input.getIndex() == 1);
 
 	input = StringToScanner("b");
 	res = SymbolSet<char>{ 'a', 'b', 'c' }.parse(input);
-	assert(res);
+	assert(res == 1);
 	assert(input.getIndex() == 1);
 
 	input = StringToScanner("cat");
 	res = SymbolSet<char>{ 'a', 'b', 'c' }.parse(input);
-	assert(res);
+	assert(res == 1);
 	assert(input.getIndex() == 1);
 
 	input = StringToScanner("delicious");
 	res = SymbolSet<char>{ 'a', 'b', 'c' }.parse(input);
-	assert(!res);
+	assert(res < 0);
 	assert(input.getIndex() == 0);
 
 	input = StringToScanner("e");
 	res = SymbolSet<char>{ 'a', 'b', 'c' }.parse(input);
-	assert(!res);
+	assert(res < 0);
 	assert(input.getIndex() == 0);
 
 	input = StringToScanner("");
 	res = SymbolSet<char>{ 'a', 'b', 'c' }.parse(input);
-	assert(!res);
+	assert(res < 0);
 	assert(input.getIndex() == 0);
 
 	input = StringToScanner("abc");
 	res = SymbolSet<char>{}.parse(input);
-	assert(!res);
+	assert(res < 0);
 	assert(input.getIndex() == 0);
 
 	input = StringToScanner("");
 	res = SymbolSet<char>{}.parse(input);
-	assert(!res);
+	assert(res < 0);
 	assert(input.getIndex() == 0);
 }
 
 void byx::ParserCombinatorTest::ExcludeSetTest()
 {
 	Scanner<char> input = StringToScanner("apple");
-	bool res = ExcludeSet<char>{ 'a', 'b', 'c' }.parse(input);
-	assert(!res);
+	int res = ExcludeSet<char>{ 'a', 'b', 'c' }.parse(input);
+	assert(res < 0);
 	assert(input.getIndex() == 0);
 
 	input = StringToScanner("b");
 	res = ExcludeSet<char>{ 'a', 'b', 'c' }.parse(input);
-	assert(!res);
+	assert(res < 0);
 	assert(input.getIndex() == 0);
 
 	input = StringToScanner("cat");
 	res = ExcludeSet<char>{ 'a', 'b', 'c' }.parse(input);
-	assert(!res);
+	assert(res < 0);
 	assert(input.getIndex() == 0);
 
 	input = StringToScanner("delicious");
 	res = ExcludeSet<char>{ 'a', 'b', 'c' }.parse(input);
-	assert(res);
+	assert(res == 1);
 	assert(input.getIndex() == 1);
 
 	input = StringToScanner("e");
 	res = ExcludeSet<char>{ 'a', 'b', 'c' }.parse(input);
-	assert(res);
+	assert(res == 1);
 	assert(input.getIndex() == 1);
 
 	input = StringToScanner("");
 	res = ExcludeSet<char>{ 'a', 'b', 'c' }.parse(input);
-	assert(!res);
+	assert(res < 0);
 	assert(input.getIndex() == 0);
 	
 	input = StringToScanner("abc");
 	res = ExcludeSet<char>{}.parse(input);
-	assert(res);
+	assert(res == 1);
 	assert(input.getIndex() == 1);
 
 	input = StringToScanner("");
 	res = ExcludeSet<char>{}.parse(input);
-	assert(!res);
+	assert(res < 0);
 	assert(input.getIndex() == 0);
 }
 
 void byx::ParserCombinatorTest::ZeroOrMoreTest()
 {
 	Scanner<char> input = StringToScanner("aaaabb");
-	bool res = ZeroOrMore<char>(make_shared<Symbol<char>>('a')).parse(input);
-	assert(res);
+	int res = ZeroOrMore<char>(make_shared<Symbol<char>>('a')).parse(input);
+	assert(res == 4);
 	assert(input.getIndex() == 4);
 
 	input = StringToScanner("aaaaaaa");
 	res = ZeroOrMore<char>(make_shared<Symbol<char>>('a')).parse(input);
-	assert(res);
+	assert(res == 7);
 	assert(input.getIndex() == 7);
 
 	input = StringToScanner("abbbbb");
 	res = ZeroOrMore<char>(make_shared<Symbol<char>>('a')).parse(input);
-	assert(res);
+	assert(res == 1);
 	assert(input.getIndex() == 1);
 
 	input = StringToScanner("a");
 	res = ZeroOrMore<char>(make_shared<Symbol<char>>('a')).parse(input);
-	assert(res);
+	assert(res == 1);
 	assert(input.getIndex() == 1);
 
 	input = StringToScanner("baaaaaaa");
 	res = ZeroOrMore<char>(make_shared<Symbol<char>>('a')).parse(input);
-	assert(res);
+	assert(res == 0);
 	assert(input.getIndex() == 0);
 
 	input = StringToScanner("b");
 	res = ZeroOrMore<char>(make_shared<Symbol<char>>('a')).parse(input);
-	assert(res);
+	assert(res == 0);
 	assert(input.getIndex() == 0);
 
 	input = StringToScanner("");
 	res = ZeroOrMore<char>(make_shared<Symbol<char>>('a')).parse(input);
-	assert(res);
+	assert(res == 0);
 	assert(input.getIndex() == 0);
 }
 
 void byx::ParserCombinatorTest::OneOrMoreTest()
 {
 	Scanner<char> input = StringToScanner("aaaabb");
-	bool res = OneOrMore<char>(make_shared<Symbol<char>>('a')).parse(input);
-	assert(res);
+	int res = OneOrMore<char>(make_shared<Symbol<char>>('a')).parse(input);
+	assert(res == 4);
 	assert(input.getIndex() == 4);
 
 	input = StringToScanner("aaaaaaa");
 	res = OneOrMore<char>(make_shared<Symbol<char>>('a')).parse(input);
-	assert(res);
+	assert(res == 7);
 	assert(input.getIndex() == 7);
 
 	input = StringToScanner("abbbbb");
 	res = OneOrMore<char>(make_shared<Symbol<char>>('a')).parse(input);
-	assert(res);
+	assert(res == 1);
 	assert(input.getIndex() == 1);
 
 	input = StringToScanner("a");
 	res = OneOrMore<char>(make_shared<Symbol<char>>('a')).parse(input);
-	assert(res);
+	assert(res == 1);
 	assert(input.getIndex() == 1);
 
 	input = StringToScanner("baaaaaaa");
 	res = OneOrMore<char>(make_shared<Symbol<char>>('a')).parse(input);
-	assert(!res);
+	assert(res < 0);
 	assert(input.getIndex() == 0);
 
 	input = StringToScanner("b");
 	res = OneOrMore<char>(make_shared<Symbol<char>>('a')).parse(input);
-	assert(!res);
+	assert(res < 0);
 	assert(input.getIndex() == 0);
 
 	input = StringToScanner("");
 	res = OneOrMore<char>(make_shared<Symbol<char>>('a')).parse(input);
-	assert(!res);
+	assert(res < 0);
 	assert(input.getIndex() == 0);
 }
 
 void byx::ParserCombinatorTest::ConcatTest()
 {
 	Scanner<char> input = StringToScanner("abcde");
-	bool res = Concat<char>(make_shared<Symbol<char>>('a'), make_shared<Symbol<char>>('b')).parse(input);
-	assert(res);
+	int res = Concat<char>(make_shared<Symbol<char>>('a'), make_shared<Symbol<char>>('b')).parse(input);
+	assert(res == 2);
 	assert(input.getIndex() == 2);
 
 	input = StringToScanner("ab");
 	res = Concat<char>(make_shared<Symbol<char>>('a'), make_shared<Symbol<char>>('b')).parse(input);
-	assert(res);
+	assert(res == 2);
 	assert(input.getIndex() == 2);
 
 
 	input = StringToScanner("xycde");
 	res = Concat<char>(make_shared<Symbol<char>>('a'), make_shared<Symbol<char>>('b')).parse(input);
-	assert(!res);
+	assert(res < 0);
 	assert(input.getIndex() == 0);
 
 	input = StringToScanner("acde");
 	res = Concat<char>(make_shared<Symbol<char>>('a'), make_shared<Symbol<char>>('b')).parse(input);
-	assert(!res);
+	assert(res < 0);
 	assert(input.getIndex() == 0);
 
 
 	input = StringToScanner("a");
 	res = Concat<char>(make_shared<Symbol<char>>('a'), make_shared<Symbol<char>>('b')).parse(input);
-	assert(!res);
+	assert(res < 0);
 	assert(input.getIndex() == 0);
 
 	input = StringToScanner("b");
 	res = Concat<char>(make_shared<Symbol<char>>('a'), make_shared<Symbol<char>>('b')).parse(input);
-	assert(!res);
+	assert(res < 0);
 	assert(input.getIndex() == 0);
 
 	input = StringToScanner("x");
 	res = Concat<char>(make_shared<Symbol<char>>('a'), make_shared<Symbol<char>>('b')).parse(input);
-	assert(!res);
+	assert(res < 0);
 	assert(input.getIndex() == 0);
 
 	input = StringToScanner("");
 	res = Concat<char>(make_shared<Symbol<char>>('a'), make_shared<Symbol<char>>('b')).parse(input);
-	assert(!res);
+	assert(res < 0);
 	assert(input.getIndex() == 0);
 }
 
 void byx::ParserCombinatorTest::ChooseTest()
 {
 	Scanner<char> input = StringToScanner("apple");
-	bool res = Choose<char>(make_shared<Symbol<char>>('a'), make_shared<Symbol<char>>('b')).parse(input);
-	assert(res);
+	int res = Choose<char>(make_shared<Symbol<char>>('a'), make_shared<Symbol<char>>('b')).parse(input);
+	assert(res == 1);
 	assert(input.getIndex() == 1);
 
 	input = StringToScanner("banana");
 	res = Choose<char>(make_shared<Symbol<char>>('a'), make_shared<Symbol<char>>('b')).parse(input);
-	assert(res);
+	assert(res == 1);
 	assert(input.getIndex() == 1);
 
 	input = StringToScanner("cat");
 	res = Choose<char>(make_shared<Symbol<char>>('a'), make_shared<Symbol<char>>('b')).parse(input);
-	assert(!res);
+	assert(res < 0);
 	assert(input.getIndex() == 0);
 
 	input = StringToScanner("d");
 	res = Choose<char>(make_shared<Symbol<char>>('a'), make_shared<Symbol<char>>('b')).parse(input);
-	assert(!res);
+	assert(res < 0);
 	assert(input.getIndex() == 0);
 
 	input = StringToScanner("");
 	res = Choose<char>(make_shared<Symbol<char>>('a'), make_shared<Symbol<char>>('b')).parse(input);
-	assert(!res);
+	assert(res < 0);
 	assert(input.getIndex() == 0);
 
 	// ÌØÊâ²âÊÔÓÃÀı
 	input = StringToScanner("ac");
 	res = Choose<char>(make_shared<Prefix>("ab"), make_shared<Prefix>("ac")).parse(input);
-	assert(res); 
+	assert(res == 2); 
 	assert(input.getIndex() == 2);
 }
 
@@ -456,15 +455,15 @@ void byx::ParserCombinatorTest::CallbackAfterSucceededTest()
 	{
 		called = true;
 	};
-	bool res = CallbackAfterSucceeded<char>(make_shared<Symbol<char>>('a'), callback).parse(input);
-	assert(res);
+	int res = CallbackAfterSucceeded<char>(make_shared<Symbol<char>>('a'), callback).parse(input);
+	assert(res == 1);
 	assert(input.getIndex() == 1);
 	assert(called);
 
 	called = false;
 	input = StringToScanner("xyz");
 	res = CallbackAfterSucceeded<char>(make_shared<Symbol<char>>('a'), callback).parse(input);
-	assert(!res);
+	assert(res < 0);
 	assert(input.getIndex() == 0);
 	assert(!called);
 }
@@ -481,130 +480,130 @@ void byx::ParserCombinatorTest::LazyTest()
 	Scanner<char> input = StringToScanner("abcde");
 	shared_ptr<Parser<char>> p = make_shared<Lazy<char>>(getParser);
 	assert(!called);
-	bool res = p->parse(input);
+	int res = p->parse(input);
 	assert(called);
-	assert(res);
+	assert(res == 1);
 	assert(input.getIndex() == 1);
 }
 
 void byx::ParserCombinatorTest::RangeTest()
 {
 	Scanner<char> input = StringToScanner("apple");
-	bool res = Range('a', 'c').parse(input);
-	assert(res);
+	int res = Range('a', 'c').parse(input);
+	assert(res == 1);
 	assert(input.getIndex() == 1);
 
 	input = StringToScanner("banana");
 	res = Range('a', 'c').parse(input);
-	assert(res);
+	assert(res == 1);
 	assert(input.getIndex() == 1);
 
 	input = StringToScanner("c");
 	res = Range('a', 'c').parse(input);
-	assert(res);
+	assert(res == 1);
 	assert(input.getIndex() == 1);
 
 	input = StringToScanner("delicious");
 	res = Range('a', 'c').parse(input);
-	assert(!res);
+	assert(res < 0);
 	assert(input.getIndex() == 0);
 
 	input = StringToScanner("d");
 	res = Range('a', 'c').parse(input);
-	assert(!res);
+	assert(res < 0);
 	assert(input.getIndex() == 0);
 
 	input = StringToScanner("");
 	res = Range('a', 'c').parse(input);
-	assert(!res);
+	assert(res < 0);
 	assert(input.getIndex() == 0);
 
 	input = StringToScanner("apple");
 	res = Range('c', 'a').parse(input);
-	assert(res);
+	assert(res == 1);
 	assert(input.getIndex() == 1);
 	
 	input = StringToScanner("banana");
 	res = Range('c', 'a').parse(input);
-	assert(res);
+	assert(res == 1);
 	assert(input.getIndex() == 1);
 
 	input = StringToScanner("c");
 	res = Range('c', 'a').parse(input);
-	assert(res);
+	assert(res == 1);
 	assert(input.getIndex() == 1);
 
 	input = StringToScanner("delicious");
 	res = Range('c', 'a').parse(input);
-	assert(!res);
+	assert(res < 0);
 	assert(input.getIndex() == 0);
 
 	input = StringToScanner("d");
 	res = Range('c', 'a').parse(input);
-	assert(!res);
+	assert(res < 0);
 	assert(input.getIndex() == 0);
 
 	input = StringToScanner("");
 	res = Range('c', 'a').parse(input);
-	assert(!res);
+	assert(res < 0);
 	assert(input.getIndex() == 0);
 
 	input = StringToScanner("apple");
 	res = Range('a', 'a').parse(input);
-	assert(res);
+	assert(res == 1);
 	assert(input.getIndex() == 1);
 
 	input = StringToScanner("box");
 	res = Range('a', 'a').parse(input);
-	assert(!res);
+	assert(res < 0);
 	assert(input.getIndex() == 0);
 }
 
 void byx::ParserCombinatorTest::PrefixTest()
 {
 	Scanner<char> input = StringToScanner("int i = 0");
-	bool res = Prefix("int").parse(input);
-	assert(res);
+	int res = Prefix("int").parse(input);
+	assert(res == 3);
 	assert(input.getIndex() == 3);
 
 	input = StringToScanner("int");
 	res = Prefix("int").parse(input);
-	assert(res);
+	assert(res == 3);
 	assert(input.getIndex() == 3);
 
 	input = StringToScanner("inout");
 	res = Prefix("int").parse(input);
-	assert(!res);
+	assert(res < 0);
 	assert(input.getIndex() == 0);
 
 	input = StringToScanner("in");
 	res = Prefix("int").parse(input);
-	assert(!res);
+	assert(res < 0);
 	assert(input.getIndex() == 0);
 
 	input = StringToScanner("");
 	res = Prefix("int").parse(input);
-	assert(!res);
+	assert(res < 0);
 	assert(input.getIndex() == 0);
 
 	input = StringToScanner("abc");
 	res = Prefix("a").parse(input);
-	assert(res);
+	assert(res == 1);
 	assert(input.getIndex() == 1);
 
 	input = StringToScanner("a");
 	res = Prefix("a").parse(input);
-	assert(res);
+	assert(res == 1);
 	assert(input.getIndex() == 1);
 
 	input = StringToScanner("abc");
 	res = Prefix("").parse(input);
-	assert(res);
+	assert(res == 0);
 	assert(input.getIndex() == 0);
 
 	input = StringToScanner("");
 	res = Prefix("").parse(input);
-	assert(res);
+	assert(res == 0);
 	assert(input.getIndex() == 0);
 }
 

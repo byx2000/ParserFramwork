@@ -109,12 +109,7 @@ namespace byx
 			return (*this) | rule;
 		}
 
-		bool parse(Scanner<T>& input)
-		{
-			return p->parse(input);
-		}
-
-		bool parse(const std::vector<T>& input)
+		int parse(const std::vector<T>& input)
 		{
 			Scanner<T> scanner(input);
 			return p->parse(scanner);
