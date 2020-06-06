@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="头文件\Framwork">
+      <UniqueIdentifier>{22a19872-a030-46b9-80e2-fcbb358df321}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Test">
+      <UniqueIdentifier>{0b9f1190-0b7c-4fc2-9c92-792a548917a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Test">
+      <UniqueIdentifier>{e609ff53-973e-4c87-8d19-ba901bd156f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Samples">
+      <UniqueIdentifier>{78e41196-ea3a-45aa-99ba-cc58182b196b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Samples\CLexer">
+      <UniqueIdentifier>{495abbf5-7710-4320-971e-355fc5c1ff22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Samples">
+      <UniqueIdentifier>{4ad20c0b-7b7d-40e2-96c2-782984715dcf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Samples\CLexer">
+      <UniqueIdentifier>{0896916e-1f30-4228-bf89-619701790352}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Samples\BracketMatch">
+      <UniqueIdentifier>{46aabc83-ffd0-4ea3-a3f3-1e6e95443645}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Samples\BracketMatch">
+      <UniqueIdentifier>{dc3311a1-15bb-4ea2-a453-6e13dce3d040}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Samples\ExprCalc1">
+      <UniqueIdentifier>{2b7a4868-d092-4770-88ba-afb9e68a9894}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Samples\ExprCalc1">
+      <UniqueIdentifier>{67fa98da-9633-47a4-a415-414fc3a75f94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Samples\ExprCalc2">
+      <UniqueIdentifier>{d3cd4394-58f1-410b-9fa9-0f84cd32255b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Samples\ExprCalc2">
+      <UniqueIdentifier>{e254f68b-5543-47d9-b701-a8c0796ad96d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Test\ParserCombinatorTest.cpp">
+      <Filter>源文件\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Samples\CLexer\CLexer.cpp">
+      <Filter>源文件\Samples\CLexer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Test\CLexerTest.cpp">
+      <Filter>源文件\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Samples\BracketMatch\BracketMatch.cpp">
+      <Filter>源文件\Samples\BracketMatch</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Test\BracketMatchTest.cpp">
+      <Filter>源文件\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Samples\ExprCalc1\ExprCalc1.cpp">
+      <Filter>源文件\Samples\ExprCalc1</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Test\ExprCalc1Test.cpp">
+      <Filter>源文件\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Samples\ExprCalc2\ExprCalc2.cpp">
+      <Filter>源文件\Samples\ExprCalc2</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Test\ExprCalc2Test.cpp">
+      <Filter>源文件\Test</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Framwork\ParserCombinator.h">
+      <Filter>头文件\Framwork</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Framwork\Rule.h">
+      <Filter>头文件\Framwork</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Framwork\Scanner.h">
+      <Filter>头文件\Framwork</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Test\ParserCombinatorTest.h">
+      <Filter>头文件\Test</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Samples\CLexer\CLexer.h">
+      <Filter>头文件\Samples\CLexer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Test\CLexerTest.h">
+      <Filter>头文件\Test</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Samples\BracketMatch\BracketMatch.h">
+      <Filter>头文件\Samples\BracketMatch</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Test\BracketMatchTest.h">
+      <Filter>头文件\Test</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Samples\ExprCalc1\ExprCalc1.h">
+      <Filter>头文件\Samples\ExprCalc1</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Test\ExprCalc1Test.h">
+      <Filter>头文件\Test</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Samples\ExprCalc2\ExprCalc2.h">
+      <Filter>头文件\Samples\ExprCalc2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Test\ExprCalc2Test.h">
+      <Filter>头文件\Test</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
