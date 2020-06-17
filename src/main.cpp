@@ -13,6 +13,8 @@
 #include "Test/ExprCalc1Test.h"
 #include "Samples/ExprCalc2/ExprCalc2.h"
 #include "Test/ExprCalc2Test.h"
+#include "Samples/Regex/Regex.h"
+#include "Test/RegexTest.h"
 
 using namespace std;
 using namespace byx;
@@ -28,6 +30,7 @@ int main()
 	BracketMatchTest::Run();
 	ExprCalc1Test::Run();
 	ExprCalc2Test::Run();
+	RegexTest::Run();
 
 	return 0;
 }

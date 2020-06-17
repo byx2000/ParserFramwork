@@ -144,11 +144,13 @@
     <ClCompile Include="src\Samples\CLexer\CLexer.cpp" />
     <ClCompile Include="src\Samples\ExprCalc1\ExprCalc1.cpp" />
     <ClCompile Include="src\Samples\ExprCalc2\ExprCalc2.cpp" />
+    <ClCompile Include="src\Samples\Regex\Regex.cpp" />
     <ClCompile Include="src\Test\BracketMatchTest.cpp" />
     <ClCompile Include="src\Test\CLexerTest.cpp" />
     <ClCompile Include="src\Test\ExprCalc1Test.cpp" />
     <ClCompile Include="src\Test\ExprCalc2Test.cpp" />
     <ClCompile Include="src\Test\ParserCombinatorTest.cpp" />
+    <ClCompile Include="src\Test\RegexTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Framwork\ParserCombinator.h" />
@@ -158,11 +160,13 @@
     <ClInclude Include="src\Samples\CLexer\CLexer.h" />
     <ClInclude Include="src\Samples\ExprCalc1\ExprCalc1.h" />
     <ClInclude Include="src\Samples\ExprCalc2\ExprCalc2.h" />
+    <ClInclude Include="src\Samples\Regex\Regex.h" />
     <ClInclude Include="src\Test\BracketMatchTest.h" />
     <ClInclude Include="src\Test\CLexerTest.h" />
     <ClInclude Include="src\Test\ExprCalc1Test.h" />
     <ClInclude Include="src\Test\ExprCalc2Test.h" />
     <ClInclude Include="src\Test\ParserCombinatorTest.h" />
+    <ClInclude Include="src\Test\RegexTest.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -52,6 +52,12 @@
     <Filter Include="源文件\Samples\ExprCalc2">
       <UniqueIdentifier>{e254f68b-5543-47d9-b701-a8c0796ad96d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="源文件\Samples\Regex">
+      <UniqueIdentifier>{662a68b1-1442-4d2e-8e17-e63f1b67af55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Samples\Regex">
+      <UniqueIdentifier>{324fe1b1-6eb0-42d9-bd21-94b45734f18a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -82,6 +88,12 @@
       <Filter>源文件\Samples\ExprCalc2</Filter>
     </ClCompile>
     <ClCompile Include="src\Test\ExprCalc2Test.cpp">
+      <Filter>源文件\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Samples\Regex\Regex.cpp">
+      <Filter>源文件\Samples\Regex</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Test\RegexTest.cpp">
       <Filter>源文件\Test</Filter>
     </ClCompile>
   </ItemGroup>
@@ -120,6 +132,12 @@
       <Filter>头文件\Samples\ExprCalc2</Filter>
     </ClInclude>
     <ClInclude Include="src\Test\ExprCalc2Test.h">
+      <Filter>头文件\Test</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Samples\Regex\Regex.h">
+      <Filter>头文件\Samples\Regex</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Test\RegexTest.h">
       <Filter>头文件\Test</Filter>
     </ClInclude>
   </ItemGroup>

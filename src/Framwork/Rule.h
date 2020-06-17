@@ -52,7 +52,7 @@ namespace byx
 
 		static Rule ExcludeSet(const std::initializer_list<T>& symbols)
 		{
-			return Rule(std::make_shared<byx::SymbolSet<T>>(symbols));
+			return Rule(std::make_shared<byx::ExcludeSet<T>>(symbols));
 		}
 
 		static Rule Satisfy(const Rule& rule, const std::function<bool(const std::vector<T>&, size_t, size_t)>& predicate) 
